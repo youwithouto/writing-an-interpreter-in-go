@@ -6,7 +6,7 @@ import (
 	"github.com/youwithouto/monkey/01/token"
 )
 
-func TextNextToken(t *testing.T) {
+func TestNextToken(t *testing.T) {
 	input := `let five = 5;
 	let ten = 10;
 	
