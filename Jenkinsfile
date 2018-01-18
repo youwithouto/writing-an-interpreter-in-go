@@ -1,12 +1,13 @@
 node {
     def root = tool name: 'Go 1.9', type: 'go'
+    def PROJECT_DIR = '${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/src/github.com/youwithouto/writing-an-interpreter-in-go/'
     try{
         notifyBuild('STARTED')
 
-        ws("${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/src/github.com/youwithouto/dir/") {
+        ws("${PROJECT_DIR}") {
             withEnv(["GOROOT=${root}", "GOPATH=${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}", "PATH+GO=${root}/bin"]) {
                 env.PATH="${GOPATH}/bin:$PATH"
-                sh 'printenv'
+                // sh 'printenv'
                 stage('Checkout'){
                     echo 'Checking out SCM'
                     checkout scm
@@ -21,7 +22,7 @@ node {
                     sh 'go get github.com/tebeka/go2xunit'
                     
                     //or -update
-                    sh 'cd ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/src/github.com/youwithouto/dir/ && dep ensure' 
+                    sh 'cd ${PROJECT_DIR} && dep ensure' 
                 }
         
                 stage('Test'){
@@ -49,7 +50,7 @@ node {
                     echo 'Building Executable'
                 
                     //Produced binary is $GOPATH/src/cmd/project/project
-                    sh """cd ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/src/github.com/youwithouto/dir/ && go build -ldflags '-s'"""
+                    sh """cd ${PROJECT_DIR} && go build -ldflags '-s'"""
                 }
             }
         }
