@@ -1,9 +1,10 @@
 node {
+    def root = tool name: 'Go1.8', type: 'go'
     try{
         notifyBuild('STARTED')
 
         ws("${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/") {
-            withEnv(["GOPATH=${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}"]) {
+            withEnv(["GOROOT=${root}", "GOPATH=${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}"]) {
                 env.PATH="${GOPATH}/bin:$PATH"
                 sh 'printenv'
                 stage('Checkout'){
