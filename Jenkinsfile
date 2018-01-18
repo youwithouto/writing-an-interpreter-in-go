@@ -1,11 +1,11 @@
 node {
     try{
         notifyBuild('STARTED')
-        
+
         ws("${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/") {
             withEnv(["GOPATH=${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}"]) {
                 env.PATH="${GOPATH}/bin:$PATH"
-                
+                sh 'printenv'
                 stage('Checkout'){
                     echo 'Checking out SCM'
                     checkout scm
@@ -24,7 +24,8 @@ node {
                 }
         
                 stage('Test'){
-                    
+                    echo 'Test'
+
                     //List all our project files with 'go list ./... | grep -v /vendor/ | grep -v github.com | grep -v golang.org'
                     //Push our project files relative to ./src
                     sh 'cd $GOPATH && go list ./... | grep -v /vendor/ | grep -v github.com | grep -v golang.org > projectPaths'
@@ -53,8 +54,10 @@ node {
         }
     }catch (e) {
         // If there was an exception thrown, the build failed
+        echo 'Failed'
         currentBuild.result = "FAILED"
     } finally {
+        echo 'Finally'
         // Success or failure, always send notifications
         notifyBuild(currentBuild.result)
     }
