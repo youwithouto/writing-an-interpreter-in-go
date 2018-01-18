@@ -49,7 +49,7 @@ node {
                     echo 'Building Executable'
                 
                     //Produced binary is $GOPATH/src/cmd/project/project
-                    sh """cd ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/src/github.com/youwithouto/monkey/ && go build -ldflags '-s'"""
+                    sh """cd ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/src/github.com/youwithouto/monkey/ && go build -ldflags '-s' -o monkey-lang"""
                 }
             }
         }
