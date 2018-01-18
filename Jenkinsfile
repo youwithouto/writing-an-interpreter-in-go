@@ -36,13 +36,13 @@ node {
                     // def paths = sh returnStdout: true, script: """awk '\$0="./src/"\$0' projectPaths"""
                     
                     echo 'Vetting'
-                    sh """cd ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/src/github.com/youwithouto/monkey/ && go tool vet ./..."""
+                    sh """cd ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/src/github.com/youwithouto/monkey/ && go tool vet ./ ..."""
 
                     echo 'Linting'
-                    sh """cd ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/src/github.com/youwithouto/monkey/ && golint ./ ..."""
+                    sh """cd ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/src/github.com/youwithouto/monkey/ && golint ./..."""
                     
                     echo 'Testing'
-                    sh """cd ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/src/github.com/youwithouto/monkey/ && go test -race -cover ./ ..."""
+                    sh """cd ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/src/github.com/youwithouto/monkey/ && go test -race -cover ./..."""
                 }
             
                 stage('Build'){
