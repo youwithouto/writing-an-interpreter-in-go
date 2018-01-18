@@ -4,7 +4,7 @@ node {
         notifyBuild('STARTED')
 
         ws("${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/") {
-            withEnv(["GOROOT=${root}", "GOPATH=${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}"]) {
+            withEnv(["GOROOT=${root}", "GOPATH=${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}", "PATH+GO=${root}/bin"]) {
                 env.PATH="${GOPATH}/bin:$PATH"
                 sh 'printenv'
                 stage('Checkout'){
