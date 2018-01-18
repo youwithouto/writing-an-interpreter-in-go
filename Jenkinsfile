@@ -21,7 +21,7 @@ node {
                     sh 'go get github.com/tebeka/go2xunit'
                     
                     //or -update
-                    sh 'cd ${GOPATH}/src/cmd/project/ && dep ensure' 
+                    sh 'cd ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/ && dep ensure' 
                 }
         
                 stage('Test'){
@@ -49,7 +49,7 @@ node {
                     echo 'Building Executable'
                 
                     //Produced binary is $GOPATH/src/cmd/project/project
-                    sh """cd $GOPATH/src/cmd/project/ && go build -ldflags '-s'"""
+                    sh """cd ${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}/ && go build -ldflags '-s'"""
                 }
             }
         }
